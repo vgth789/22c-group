@@ -155,7 +155,7 @@ protected:
 		// else, the sub-tree has two branches
 		else
 		{
-			// Find the inorder successor of the entry in N: it is in the left subtree rooted at N’s right child
+			// Find the inorder successor of the entry in N: it is in the left subtree rooted at Nâ€™s right child
 			tempPtr = removeLeftMostNode(currentNode->rightBranch, currentNode->data);  // data is referenced in removeleftnode function
 			currentNode->rightBranch = tempPtr;
 			currentNode->data = currentNode->data;  // because the data was referenced, it was changed
@@ -511,62 +511,22 @@ public:
 		}
 	}
 	//function that uses comparison of data to find the depth of an item in the tree
-	int getHeight(DualLinkDataNode<T>*find)
+	void printIndented2(DualLinkDataNode<T>* start, int tabs)
 	{
-		//Validate that pointer is not null and exists in tree;
-		if (find == nullptr || this->searchForValue(find->data) == false)
-		{
-			return -1;
-		}
-		else
-		{
-			//Create return counter
-			int result = 0;
-			//Create poiner to iterate with
-			DualLinkDataNode<T>* iter = rootNode;
-			//Iterate till data is matched
-			while (iter->data != find->data)
-			{
-				//Based on comparisons determine which branch to follow
-				if (find->data > iter->data)
-				{
-					iter = iter->rightBranch;
-				}
-				else
-				{
-					iter = iter->leftBranch;
-				}
-				//Increment depth counter
-				result++;
-			}
-			//Return value
-			return result;
-		}
-	}
-
-	//Untested Indent Print I need to test if I incremented correnctly as well as view the output.
-	void printIndented(DualLinkDataNode<T>*start)
-	{
-		//Verify not null
 		if (start != nullptr)
 		{
-			//Call function on itself till we get to rightmost branch
-			printIndented(start->rightBranch);
-			//Print out number of tabs corresponding to depth of the object
-			//(May change it so it prints out an arrow if we have time)
-			for (int x = 0; x <getHeight(start); x++)
+			printIndented2(start->rightBranch, tabs + 1);
+			for (int x = 0; x < tabs; x++)
 			{
 				std::cout << "\t";
 			}
-			//Print out data (Verify ostream operator in Pokemon class to make sure out puts work)
 			std::cout << start->data << std::endl;
-			//Call function on left branch till tree is completed
-			printIndented(start->leftBranch);
+			printIndented2(start->leftBranch,tabs+1);
 		}
 	}
 	void callPrintIndentedTree()
 	{
-		printIndented(rootNode);
+		printIndented2(rootNode,0);
 	}
 };
 
